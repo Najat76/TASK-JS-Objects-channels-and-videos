@@ -6,7 +6,7 @@
  */
 
 const channels = require("./channels.json");
-// console.log(channels[0]);
+console.log(channels[0]);
 
 /**************************************************************
  * getChannelName(channel)
@@ -14,10 +14,12 @@ const channels = require("./channels.json");
  * - returns the name of the channel
  ****************************************************************/
 function getChannelName(channel) {
-  // Your code here
+  return channel.name;
 }
 
-// console.log(getChannelName(channels[0]));
+//console.log(channels.name)
+
+console.log(getChannelName(channels[0]));
 
 /**************************************************************
  * numberOfVideos(channel)
@@ -25,9 +27,9 @@ function getChannelName(channel) {
  * - returns the number of videos that channel has
  ****************************************************************/
 function numberOfVideos(channel) {
-  // Your code here
+  return channel.videos.length;
 }
-// console.log(numberOfVideos(channels[0]))
+console.log(numberOfVideos(channels[0]));
 
 /**************************************************************
  * channelHasVideo(videoTitle, channel):
@@ -35,14 +37,21 @@ function numberOfVideos(channel) {
  * - receives a channel object
  * - returns true if the channel object has a video that matches the given video title
  * - returns false otherwise
- *
+ 
  * BONUS: use iteration method `.some()`
  ****************************************************************/
 function channelHasVideo(videoTitle, channel) {
-  // Your code here
+  const result = channel.videos.find((video) => {
+    return video.title == videoTitle;
+  });
+  if (result) {
+    return true;
+  } else {
+    return false;
+  }
 }
-// console.log(channelHasVideo("The Universal S", channels[0]));
-// console.log(channelHasVideo("The Universal S", channels[1]));
+console.log(channelHasVideo("The Universal S", channels[0]));
+console.log(channelHasVideo("The Universal S", channels[1]));
 
 /**************************************************************
  * getChannelByName(channelName, channels):
@@ -53,9 +62,11 @@ function channelHasVideo(videoTitle, channel) {
  * BONUS: use iteration method `.find()`
  ****************************************************************/
 function getChannelByName(channelName, channels) {
-  // Your code here
+  return channels.find((channel) => {
+    channel.name == channelName;
+  });
 }
-// console.log(getChannelByName("PowerfulJRE", channels))
+console.log(getChannelByName("PowerfulJRE", channels));
 
 /**************************************************************
  * getChannelByVideoTitle(videoTitle, channels):
@@ -65,10 +76,25 @@ function getChannelByName(channelName, channels) {
  *
  * BONUS: use iteration methods `.find()` and `.some()`
  ****************************************************************/
+/*function getChannelByVideoTitle(videoTitle, channels) {
+  return channels.videos.find((video) => {
+    videos == videoTitle;
+  });
+  */
+/*
+input: one videoTitle + one channel
+output:  channel name (if videoTitle exists) + provided videoTitle
+Using Yousef Al-Kanderi method in solving tasks: from backwards:
+syntax of some method:  Array.some(condition) : checks the 1st element passes the condition 
+and returns true
+syntax of find : array.find(condition to be tested) 
+*/
 function getChannelByVideoTitle(videoTitle, channels) {
-  // Your code here
+  return channels.find((channel) =>
+    channel.videos.some(video.title == videoTitle)
+  );
 }
-// console.log(getChannelByVideoTitle("The Universal S", channels));
+/*console.log(getChannelByVideoTitle("The Universal S", channels)); */
 
 /**************************************************************
  * searchChannels(query, channels):
@@ -78,10 +104,40 @@ function getChannelByVideoTitle(videoTitle, channels) {
  *
  * Hint: use string method `.includes()` and iteration method `.filter()`
  ****************************************************************/
+/*
+includes method syntax :
+1- returns true if an array contains a specified value.
+2- returns false if the value is not found.
+3- method is case sensitive.
+syntax: array.includes(element, start)
+filter method syntax:
+array.filter(condition to be checked)
+
+Using Yousef Al-Kanderi method in solving tasks: from backwards:
+step 1: inputs : query + a channel 
+        output : a channel
+step 2: using includes: 
+if 
+channel.name.includes(quere) || channel.description(quere) is true 
+return name of that channel
+big array is channels.name from Channels.json file within the task
+
+
+*/
 function searchChannels(query, channels) {
-  // Your code here
+  return channels.filter(
+    (channel) =>
+      channel.name.includes(query) || channel.description.includes(query)
+  );
 }
-// console.log(searchChannels("the", channels))
+console.log(searchChannels("the", channels));
+/*
+function searchChannels(query, channels) {
+  return channels.name.filter((query) => {return query === channels.name});
+    "description": "The Joe Rogan Experience podcast",
+    return channels.name.filter((query) => {return query === channels.description};
+}
+ */
 
 module.exports = {
   getChannelName,
